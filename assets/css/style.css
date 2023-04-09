@@ -1,0 +1,79 @@
+body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #external-events {
+    position: fixed;
+    left: 20px;
+    top: 150px;
+    width: 200px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background: #eee;
+    text-align: left;
+  }
+
+  #external-events h4 {
+    font-size: 16px;
+    margin-top: 0;
+    padding-top: 1em;
+  }
+
+  #external-events .fc-event {
+    margin: 3px 0;
+    cursor: move;
+  }
+
+  #external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+  }
+
+  #external-events p input {
+    margin: 0;
+    vertical-align: middle;
+  }
+
+  #calendar {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .fc-day-sun, .fc-day-sat {
+    color:#337ab7;  
+    border-color: black;  
+    background-color: #f1eeee; 
+  }
+
+  .fc-col-header-cell{
+    background-color: #3788d8;
+   
+  }
+
+  .fc-col-header-cell a{
+   color: white;
+  }
+
+  .fc-toolbar-title{
+    color: #3788d8 ;
+    font-size: xx-large;
+    font-weight: bold;
+
+  }
+
+  .modal-header{
+    border-bottom: 0px;
+  }
+
+  .modal-body{
+    margin-inline:20px;
+  }
+/*
+  .form-group{
+    margin-block: 10px;
+  }
+  */
