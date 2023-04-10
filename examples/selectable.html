@@ -59,51 +59,56 @@
         <!-- Modal header -->
         <div class="modal-header">
           <a class="close" data-dismiss="modal">×</a>
+          <h3><span>New event</span></h3>
         </div>
         <!-- Modal body -->
         <div class="modal-body">
         
            <form class="new-event--form">
+           
             <div class="form-group">
-              <input type="text" id="new-event--start-test"  class="form-control">
+              <label class="form-control-label">Event name</label>
+              <input type="text" id="new-event--title" class="form-control form-control-alternative new-event--title" placeholder="Event name">
             </div>
-       
-          
+
             <div class="form-group">
               <label class="form-control-label">Start date</label>
               <div class="form-group">
                 <div class='input-group date' id='datetimepicker1'>
-                   <input type='text' id="new-event--start" class="form-control new-event--start" />
+                   <input type='text' id="new-event--start" disabled class="form-control new-event--start" />
                    <span class="input-group-addon">
                    <span class="glyphicon glyphicon-calendar"></span>
                    </span>
                 </div>
              </div>
-           </div>
+            </div>
+          
             <div id="divEndDateNew" class="form-group">
               <label class="form-control-label">End date</label>
-               <input type="text" id="new-event--end" class="form-control form-control-alternative new-event--end" disabled placeholder="End date">
-
-            </div>
               <div class="form-group">
-                 <label class="form-control-label">Event name</label>
-                 <input type="text" id="new-event--title" class="form-control form-control-alternative new-event--title" placeholder="Event name">
-              </div>
-            
-              <div class="form-group mb-0">
-                 <div class="btn-group btn-group-toggle btn-group-colors event-tag" data-toggle="buttons">
-                    <label class="active" style="background-color: #54B4D3; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#54B4D3" autocomplete="off" checked></label>
-                    <label style="background-color: #E4A11B; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#E4A11B" autocomplete="off"></label>
-                    <label style="background-color: #DC4C64; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#DC4C64" autocomplete="off"></label>
-                    <label style="background-color: #14A44D; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#14A44D" autocomplete="off"></label>
-                    <label style="background-color: #3B71CA; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="3B71CA" autocomplete="off"></label>
-                  </div>
-              </div>
-      
-              <input type="hidden" id="new-event--allDay" class="new-event--allDay" />
-              <input type="hidden" id="new-event--start-h" class="new-event--start-h" />
-              <input type="hidden" id="new-event--end-h" class="new-event--end-h" />
-           </form>
+                <div class='input-group date' id='datetimepicker2'>
+                   <input type='text' id="new-event--end" disabled class="form-control new-event--end" />
+                   <span class="input-group-addon">
+                   <span class="glyphicon glyphicon-calendar"></span>
+                   </span>
+                </div>
+             </div>
+            </div>
+
+            <div class="form-group mb-0">
+                <div class="btn-group btn-group-toggle btn-group-colors event-tag" data-toggle="buttons">
+                  <label class="active" style="background-color: #54B4D3; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#54B4D3" autocomplete="off" checked></label>
+                  <label style="background-color: #E4A11B; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#E4A11B" autocomplete="off"></label>
+                  <label style="background-color: #DC4C64; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#DC4C64" autocomplete="off"></label>
+                  <label style="background-color: #14A44D; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#14A44D" autocomplete="off"></label>
+                  <label style="background-color: #3B71CA; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="3B71CA" autocomplete="off"></label>
+                </div>
+            </div>
+    
+            <input type="hidden" id="new-event--allDay" class="new-event--allDay" />
+            <input type="hidden" id="new-event--start-h" class="new-event--start-h" />
+            <input type="hidden" id="new-event--end-h" class="new-event--end-h" />
+          </form>
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
@@ -120,49 +125,67 @@
       <!-- Modal header -->
       <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
+        <h3><span>Edit event</span></h3>
       </div>
         <!-- Modal body -->
-        <div class="modal-body">
-           <form class="edit-event--form">
-              <div class="form-group">
-                <label class="form-control-label">Start date</label>
-                <input type="text" id="edit-event--start" class="form-control form-control-alternative edit-event--start" disabled placeholder="Start Date">
+      <div class="modal-body">
+        <form class="edit-event--form">
+          <div class="form-group">
+            <label class="form-control-label">Event name</label>
+            <input type="text" id="edit-event--title"  class="form-control form-control-alternative edit-event--title" placeholder="Event Title">
+          </div>
+
+          <div class="form-group">
+            <label class="form-control-label">Start date</label>
+            <div class="form-group">
+              <div class='input-group date' id='datetimepicker3'>
+                  <input type='text' id="edit-event--start" disabled class="form-control edit-event--start" />
+                  <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
               </div>
-              <div id="divEndDateEdit" class="form-group">
-                <label class="form-control-label">End date</label>
-                <input type="text" id="edit-event--end" class="form-control form-control-alternative edit-event--end" disabled placeholder="End Date">
+            </div>
+          </div>
+        
+          <div id="divEndDateEdit" class="form-group">
+            <label class="form-control-label">End date</label>
+            <div class="form-group">
+              <div class='input-group date' id='datetimepicker4'>
+                  <input type='text' id="edit-event--end" disabled class="form-control edit-event--end" />
+                  <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
               </div>
-              <div class="form-group">
-                 <label class="form-control-label">Event title</label>
-                 <input type="text" id="edit-event--title"  class="form-control form-control-alternative edit-event--title" placeholder="Event Title">
+            </div>
+          </div>
+              
+              
+          <div class="form-group">
+              <div class="btn-group btn-group-toggle btn-group-colors event-tag mb-0" data-toggle="buttons">
+              <label class="active" style="background-color: #54B4D3; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#54B4D3" autocomplete="off" checked></label>
+              <label style="background-color: #E4A11B; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#E4A11B" autocomplete="off"></label>
+              <label style="background-color: #DC4C64; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#DC4C64" autocomplete="off"></label>
+              <label style="background-color: #14A44D; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#14A44D" autocomplete="off"></label>
+              <label style="background-color: #3B71CA; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="3B71CA" autocomplete="off"></label>
               </div>
-             
-              <div class="form-group">
-                 <div class="btn-group btn-group-toggle btn-group-colors event-tag mb-0" data-toggle="buttons">
-                  <label class="active" style="background-color: #54B4D3; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#54B4D3" autocomplete="off" checked></label>
-                  <label style="background-color: #E4A11B; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#E4A11B" autocomplete="off"></label>
-                  <label style="background-color: #DC4C64; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#DC4C64" autocomplete="off"></label>
-                  <label style="background-color: #14A44D; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#14A44D" autocomplete="off"></label>
-                  <label style="background-color: #3B71CA; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="3B71CA" autocomplete="off"></label>
-                  </div>
-              </div>
-              <div class="form-group" style="display: none;">
-                 <label class="form-control-label">Description</label>
-                 <textarea class="form-control form-control-alternative edit-event--description textarea-autosize" placeholder="Event Desctiption"></textarea>
-                 <i class="form-group--bar"></i>
-              </div>
-              <input type="hidden" id="edit-event--id" class="edit-event--id">
-              <input type="hidden" id="edit-event--start-h" class="edit-event--start-h" />
-              <input type="hidden" id="edit-event--end-h" class="edit-event--end-h" />
-           </form>
-        </div>
-        <!-- Modal footer -->
-        <div class="modal-footer justify-content-between"">
-           <button type="button" class="btn btn-danger" data-calendar="delete" data-dismiss="modal" id="btnEliminar">Delete</button>
-          
-           <button class="btn btn-primary" data-calendar="update" data-dismiss="modal" id="btnActualizar">Update</button>
-          
-        </div>
+          </div>
+          <div class="form-group" style="display: none;">
+              <label class="form-control-label">Description</label>
+              <textarea class="form-control form-control-alternative edit-event--description textarea-autosize" placeholder="Event Desctiption"></textarea>
+              <i class="form-group--bar"></i>
+          </div>
+          <input type="hidden" id="edit-event--id" class="edit-event--id">
+          <input type="hidden" id="edit-event--start-h" class="edit-event--start-h" />
+          <input type="hidden" id="edit-event--end-h" class="edit-event--end-h" />
+        </form>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer justify-content-between"">
+          <button type="button" class="btn btn-danger" data-calendar="delete" data-dismiss="modal" id="btnEliminar">Delete</button>
+        
+          <button class="btn btn-primary" data-calendar="update" data-dismiss="modal" id="btnActualizar">Update</button>
+        
+      </div>
      </div>
   </div>
 </div>

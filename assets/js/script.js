@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-
+      timeZone: 'UTC', // the default (unnecessary to specify)
+      handleWindowResize: true, 
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
@@ -29,10 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       eventChange: function (arg){
         //alert("debe modificar el elemento del array y la BD");
-        //console.log(arg.event);
-        var dias = 1; 
-        if (arg.event._def.hasEnd)
-          dias = 0;
+        console.log(arg.event);
 
         eventColor = arg.event._def.ui.backgroundColor; 
         id = arg.event._def.publicId;
@@ -50,11 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
             //var startStrFormat = moment(start).format();
             //var endStrFormat = moment(end).format();
           
-            var fechaStart = new Date(start);
-            var fechaEnd = new Date(end);
-            
-            fechaEnd.setDate(fechaEnd.getDate()); // + dias);
+            //var fechaStart = new Date(start);
+            //var fechaEnd = new Date(end);
+            //fechaEnd.setDate(fechaEnd.getDate()); // + dias);
             //console.info(fechaEnd)
+
             element.color = eventColor;
             element.title = title;
             element.start = start;
@@ -89,17 +87,18 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#new-event').modal('show'); 
 
         if (arg.event == undefined) {
-          var startStrFormat = moment(arg.startStr).format('DD/MM/YYYY h:mm:ss a');
-          var endStrFormat = moment(arg.endStr).format('DD/MM/YYYY h:mm:ss a');
+          var startStrFormat = moment(arg.start).utc().format('DD/MM/YYYY h:mm:ss a');
+          var endStrFormat = moment(arg.end).utc().format('DD/MM/YYYY h:mm:ss a');
 
-          //console.log(arg);
+          //console.log(startStrFormat);
+          //console.log(endStrFormat);
 
           var startStr = arg.startStr;
           var endStr = arg.endStr;
 
           document.getElementById("new-event--title").value = "";
           document.getElementById("new-event--start").value = startStrFormat 
-          document.getElementById("new-event--start-test").value = arg.start 
+
           document.getElementById("new-event--start-h").value = startStr 
           document.getElementById("new-event--end").value = endStrFormat 
           document.getElementById("new-event--end-h").value = endStr 
@@ -131,8 +130,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("edit-event--start-h").value = arg.event.startStr; //fecha str
         document.getElementById("edit-event--end-h").value = arg.event.endStr //startStr fecha str\
 
-        var startStrFormat = moment(arg.event.startStr).format('DD/MM/YYYY h:mm:ss a');
-        var endStrFormat = moment(arg.event.endStr).format('DD/MM/YYYY h:mm:ss a');
+        var startStrFormat = moment(arg.event.start).utc().format('DD/MM/YYYY h:mm:ss a');
+        var endStrFormat = moment(arg.event.end).utc().format('DD/MM/YYYY h:mm:ss a');
 
         document.getElementById("edit-event--start").value = startStrFormat;
         document.getElementById("edit-event--end").value = endStrFormat;
@@ -145,12 +144,37 @@ document.addEventListener('DOMContentLoaded', function() {
         else
           divEndDate.style.display='';
 
+        //console.log(arg.event.startStr);
+        //console.log(startStrFormat);
+
       },
-      editable: false,
+      editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
         
     });
 
+    function strToDate(dtStr) {
+      if (!dtStr) return null
+      let dateParts = dtStr.split("/");
+      let timeParts = dateParts[2].split(" ")[1].split(":");
+      dateParts[2] = dateParts[2].split(" ")[0];
+
+      var ampm = dtStr.split(' ')[2];
+     
+      var hh=timeParts[0];
+      if (ampm == 'pm')
+        hh=parseInt(timeParts[0])+12; 
+
+      //new Date( Date.parse("05/12/05 11:11:11") );
+      //console.log(hh);
+      // month is 0-based, that's why we need dataParts[1] - 1
+       var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0], hh, timeParts[1], timeParts[2]);
+       //console.log(dateObject);
+       var ret = moment(new Date(dateObject)).utc();
+       //console.log(ret);
+       return ret;
+    }
+    
     function evalCheckedTypes(){
       let isCheckedHolidays = $('#event-tag-chk-holidays')[0].checked;
       let isCheckedBirthdays = $('#event-tag-chk-birthdays')[0].checked;
@@ -188,7 +212,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
     }
-    
+
+
     $('#event-tag-chk-holidays').change(function() {
       evalCheckedTypes();
     });
@@ -225,6 +250,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $('#btnAgregar').click(function(){
       var start_f = document.getElementById("new-event--start").value;
+      var end_f = document.getElementById("new-event--end").value;
+
       var start = document.getElementById("new-event--start-h").value;
       var end = document.getElementById("new-event--end-h").value;
       var allDay = document.getElementById("new-event--allDay").value;
@@ -235,8 +262,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if($("input[type='radio'].radioBtnClass").is(':checked')) 
         eventColor = $("input[type='radio'].radioBtnClass:checked").val();
         
-      let parsedDateStart = moment(start, 'DD/MM/YYYY h:mm:ss a')
-      let parsedDateEnd = moment(end, 'DD/MM/YYYY h:mm:ss a')
+      let parsedDateStart = moment(start_f, 'DD/MM/YYYY hh:mm:ss').local();
+      let parsedDateEnd = moment(end_f, 'DD/MM/YYYY hh:mm:ss').local();
+      //console.log(parsedDateStart);
+      //console.log(parsedDateEnd);
+
       //new Date("05 October 2011 14:48 UTC");
 
       let max = 0;
@@ -245,7 +275,6 @@ document.addEventListener('DOMContentLoaded', function() {
           max = character.id;
         }
       });
-      //console.log(max);
 
       var id = max+1;
 
@@ -259,24 +288,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (eventColor == '#54B4D3') //vacations
         type = 'vacation';
-
-      
-      
-      //console.log(start); // lo que esta en el hidden
-      //console.log(start_f); // lo que esta en el picker
-
-      //const event = new Date(start_f);
-      //console.log(event); // lo que esta en el picker tiene que ser convertido a fecham sale invalid date ahorita
-
-      //console.log(event.toISOString());
-      
-      //console.log(event.toUTCString());
-      //console.log(event.toGMTString());
-      //console.log(event.toLocaleDateString());
-      //console.log(event.toTimeString());
-      
-      
-      //console.log(parsedDateStart);
       
 
       arrayData.push({ //add to initial array
@@ -304,7 +315,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });    
 
-
     
     $('#btnActualizar').click(function(){
 
@@ -318,17 +328,82 @@ document.addEventListener('DOMContentLoaded', function() {
         eventColor = $("input[type='radio'].radioBtnClassEdit:checked").val();
       }
 
+      var start_format = document.getElementById("edit-event--start").value;
+      var end_format = document.getElementById("edit-event--end").value;
+
+
+      var parts =start_format.split('/');
+      var parts2 = parts[2].split(' ');
+      var hms = parts2[1].split(':');
+
+      /*
+      var yy = parts[2].substr(0, 4);
+      var mm = parts[1];
+      var dd = parts[0];
+
+      var h = hms[0];
+      var m = hms[1];
+      var s = hms[2];
+
+      var ampm = parts2[2];
+
+      //var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
+      */
+
+      var start_format_date = strToDate(start_format);
+      var end_format_date = strToDate(end_format);
+
+     //var start_format_date = moment(event._instance.range.start).format('DD/MM/YYYY h:mm:ss a');
+     //var end_format_date = moment(event._instance.range.end).format('DD/MM/YYYY h:mm:ss a');
+      
+           /*
+      if ( start_format_date > end_format_date ) {
+          alert("Invalid range");
+          return false;
+      } 
+
+      else {
+          alert("Start date and End date can't be the same");
+          return false;
+      }*/
+
+      //var start_format_date2 = moment(start_format_date).utc(); //.format('DD/MM/YYYY h:mm:ss a');  
+      //var end_format_date2 = moment(end_format_date).utc(); //.format('DD/MM/YYYY h:mm:ss a');
+
+      //console.log(start_format_date);
+      //console.log(end_format_date);
+
       event.setProp('title', title);
       event.setProp('color',eventColor)
-      //event.setStart(start);
-      //event.setEnd(end);
+      console.log(event);
+      //event._instance.range.start = start_format_date;
+      //event._instance.range.end = end_format_date;
+
+      //event.setStart(start_format_date2);
+      //event.setEnd(end_format_date2);
+    
       //event.setProp('allDay', allDayBoolean);
       
     }); 
 
     $('#datetimepicker1').datetimepicker({
-      format: 'DD/MM/YYYY hh:mm:ss a'
+      format: 'DD/MM/YYYY hh:mm:ss a',
+    
     });
+
+    $('#datetimepicker2').datetimepicker({
+      format: 'DD/MM/YYYY hh:mm:ss a',
+    });
+
+    $('#datetimepicker3').datetimepicker({
+      format: 'DD/MM/YYYY hh:mm:ss a',
+    
+    });
+
+    $('#datetimepicker4').datetimepicker({
+      format: 'DD/MM/YYYY hh:mm:ss a',
+    });
+    
 
     $(document).ready(function(){
       $("#new-event").on('shown.bs.modal', function(){
@@ -352,6 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
 
+  
 
   calendar.render();
 });
