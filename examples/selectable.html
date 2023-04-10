@@ -7,6 +7,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 <script src= "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script src= "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
 
 <!-- Include Moment.js CDN -->
 <script type="text/javascript" src= "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
@@ -21,6 +22,8 @@
 <script src='../assets/js/holidays.js'></script>
 <script src='../assets/js/birthdays.js'></script>
 <script src='../assets/js/vacations.js'></script>
+<script src='../assets/js/sessions.js'></script>
+<script src='../assets/js/others.js'></script>
 <script src='../assets/js/script.js'></script>
 <link href='../assets/css/style.css' rel='stylesheet'>
 
@@ -31,19 +34,63 @@
 
   <div id='external-events' style="display: block;">
     <h4>Events</h4>
+    <div>
+      <!-- Toggle Button Style Holidays -->
+      <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Holidays</label>
+      <label class="toggler-wrapper style-25 style-holidays ">
+        <input type="checkbox" id="event-tag-chk-holidays" checked name="event-tag-chk">
+        
+        <div class="toggler-slider">
+          <div class="toggler-knob"></div>
+        </div>
+      </label>
+    </div>
+    <div>
+      <!-- Toggle Button Style Birthdays -->
+      <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Birthdays</label>
+      <label class="toggler-wrapper style-25 style-birthdays ">
+        <input type="checkbox" id="event-tag-chk-birthdays" checked name="event-tag-chk" >
+        
+        <div class="toggler-slider">
+          <div class="toggler-knob"></div>
+        </div>
+      </label>
+    </div>
+    <div>
+      <!-- Toggle Button Style Vacations -->
+      <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Vacations</label>
+      <label class="toggler-wrapper style-25 style-vacations ">
+        <input type="checkbox" id="event-tag-chk-vacations" checked name="event-tag-chk">
+        
+        <div class="toggler-slider">
+          <div class="toggler-knob"></div>
+        </div>
+      </label>
+    </div>
+    <div>
+      <!-- Toggle Button Style Sessions -->
+      <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Sessions</label>
+      <label class="toggler-wrapper style-25 style-sessions ">
+        <input type="checkbox" id="event-tag-chk-sessions" checked name="event-tag-chk">
+        
+        <div class="toggler-slider">
+          <div class="toggler-knob"></div>
+        </div>
+      </label>
+    </div>
+    <div>
+      <!-- Toggle Button Style Others -->
+      <label style="margin-left: 50px; margin-top: 5px; font-size: small; font-weight: lighter; position: absolute;">Others</label>
+      <label class="toggler-wrapper style-25 style-others ">
+        <input type="checkbox" id="event-tag-chk-others" checked name="event-tag-chk">
+        
+        <div class="toggler-slider">
+          <div class="toggler-knob"></div>
+        </div>
+      </label>
+    </div>
+  
     
-    <p>
-      <label class="btn" style="background-color: #DC4C64;"><input type="checkbox" id="event-tag-chk-holidays" checked name="event-tag-chk" class="chkBtnClass" value="#DC4C64" autocomplete="off"></label>
-      <label for='drop-remove'>Holidays</label>
-    </p>
-    <p>
-      <label class="btn" style="background-color: #14A44D;"><input type="checkbox" id="event-tag-chk-birthdays" checked name="event-tag-chk" class="chkBtnClass" value="#14A44D" autocomplete="off"></label>
-      <label for='drop-remove'>Birthdays</label>
-    </p>
-    <p>
-      <label class="btn" style="background-color: #54B4D3;"><input type="checkbox" id="event-tag-chk-vacations" checked name="event-tag-chk" class="chkBtnClass" value="#54B4D3" autocomplete="off"></label>
-      <label for='drop-remove'>Vacations</label>
-    </p>
   </div>
 
   <div id='calendar-wrap'>
@@ -56,12 +103,10 @@
 <div class="modal fade" id="new-event" tabindex="0" role="dialog" aria-labelledby="new-event-label" aria-hidden="true">
   <div class="modal-dialog" role="document">
      <div class="modal-content">
-        <!-- Modal header -->
         <div class="modal-header">
           <a class="close" data-dismiss="modal">×</a>
           <h3><span>New event</span></h3>
         </div>
-        <!-- Modal body -->
         <div class="modal-body">
         
            <form class="new-event--form">
@@ -75,7 +120,7 @@
               <label class="form-control-label">Start date</label>
               <div class="form-group">
                 <div class='input-group date' id='datetimepicker1'>
-                   <input type='text' id="new-event--start" disabled class="form-control new-event--start" />
+                   <input type='text' id="new-event--start"  class="form-control new-event--start" />
                    <span class="input-group-addon">
                    <span class="glyphicon glyphicon-calendar"></span>
                    </span>
@@ -87,7 +132,7 @@
               <label class="form-control-label">End date</label>
               <div class="form-group">
                 <div class='input-group date' id='datetimepicker2'>
-                   <input type='text' id="new-event--end" disabled class="form-control new-event--end" />
+                   <input type='text' id="new-event--end"  class="form-control new-event--end" />
                    <span class="input-group-addon">
                    <span class="glyphicon glyphicon-calendar"></span>
                    </span>
@@ -97,11 +142,13 @@
 
             <div class="form-group mb-0">
                 <div class="btn-group btn-group-toggle btn-group-colors event-tag" data-toggle="buttons">
-                  <label class="active" style="background-color: #54B4D3; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#54B4D3" autocomplete="off" checked></label>
-                  <label style="background-color: #E4A11B; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#E4A11B" autocomplete="off"></label>
-                  <label style="background-color: #DC4C64; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#DC4C64" autocomplete="off"></label>
-                  <label style="background-color: #14A44D; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="#14A44D" autocomplete="off"></label>
-                  <label style="background-color: #3B71CA; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClass" value="3B71CA" autocomplete="off"></label>
+                 
+                  <label style="background-color: #54B4D3; padding: 10px;border-radius: 5px;"><input type="radio" name="event-tag" id="new-radio-Vacation" class="radioBtnClassNew" value="#54B4D3" autocomplete="off" checked></label>
+                  <label style="background-color: #DC4C64; padding: 10px;border-radius: 5px;"><input type="radio" name="event-tag" id="new-radio-Holiday" class="radioBtnClassNew" value="#DC4C64" autocomplete="off"></label>
+                  <label style="background-color: #14A44D; padding: 10px;border-radius: 5px;"><input type="radio" name="event-tag" id="new-radio-Birthday" class="radioBtnClassNew" value="#14A44D" autocomplete="off"></label>
+                  <label style="background-color: #3B71CA; padding: 10px;border-radius: 5px;"><input type="radio" name="event-tag" id="new-radio-Session" class="radioBtnClassNew" value="#3B71CA" autocomplete="off"></label>
+                  <label style="background-color: #FF8C00; padding: 10px;border-radius: 5px;"><input type="radio" name="event-tag" id="new-radio-Other" class="radioBtnClassNew" value="#FF8C00" autocomplete="off"></label>
+
                 </div>
             </div>
     
@@ -110,7 +157,6 @@
             <input type="hidden" id="new-event--end-h" class="new-event--end-h" />
           </form>
         </div>
-        <!-- Modal footer -->
         <div class="modal-footer">
            <button type="submit" class="btn btn-primary new-event--add" data-dismiss="modal" id="btnAgregar">Add event</button>
         </div>
@@ -122,12 +168,10 @@
 <div class="modal fade" id="edit-event" tabindex="-1" role="dialog" aria-labelledby="edit-event-label" aria-hidden="true">
   <div class="modal-dialog" role="document">
      <div class="modal-content">
-      <!-- Modal header -->
       <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
         <h3><span>Edit event</span></h3>
       </div>
-        <!-- Modal body -->
       <div class="modal-body">
         <form class="edit-event--form">
           <div class="form-group">
@@ -139,7 +183,7 @@
             <label class="form-control-label">Start date</label>
             <div class="form-group">
               <div class='input-group date' id='datetimepicker3'>
-                  <input type='text' id="edit-event--start" disabled class="form-control edit-event--start" />
+                  <input type='text' id="edit-event--start"  class="form-control edit-event--start" />
                   <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                   </span>
@@ -151,7 +195,7 @@
             <label class="form-control-label">End date</label>
             <div class="form-group">
               <div class='input-group date' id='datetimepicker4'>
-                  <input type='text' id="edit-event--end" disabled class="form-control edit-event--end" />
+                  <input type='text' id="edit-event--end"  class="form-control edit-event--end" />
                   <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                   </span>
@@ -159,27 +203,27 @@
             </div>
           </div>
               
-              
           <div class="form-group">
-              <div class="btn-group btn-group-toggle btn-group-colors event-tag mb-0" data-toggle="buttons">
-              <label class="active" style="background-color: #54B4D3; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#54B4D3" autocomplete="off" checked></label>
-              <label style="background-color: #E4A11B; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#E4A11B" autocomplete="off"></label>
-              <label style="background-color: #DC4C64; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#DC4C64" autocomplete="off"></label>
-              <label style="background-color: #14A44D; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="#14A44D" autocomplete="off"></label>
-              <label style="background-color: #3B71CA; padding: 5px;border-radius: 5px;"><input type="radio" name="event-tag" class="radioBtnClassEdit" value="3B71CA" autocomplete="off"></label>
-              </div>
+            <div class="btn-group btn-group-toggle btn-group-colors event-tag mb-0" data-toggle="buttons">
+
+              <label style="background-color: #54B4D3; padding: 10px;border-radius: 5px;"><input type="radio" name="event-tag" id="edit-radio-Vacation" class="radioBtnClassEdit" value="#54B4D3" autocomplete="off" checked></label>
+              <label style="background-color: #DC4C64; padding: 10px;border-radius: 5px;"><input type="radio" name="event-tag" id="edit-radio-Holiday" class="radioBtnClassEdit" value="#DC4C64" autocomplete="off"></label>
+              <label style="background-color: #14A44D; padding: 10px;border-radius: 5px;"><input type="radio" name="event-tag" id="edit-radio-Birthday" class="radioBtnClassEdit" value="#14A44D" autocomplete="off"></label>
+              <label style="background-color: #3B71CA; padding: 10px;border-radius: 5px;"><input type="radio" name="event-tag" id="edit-radio-Session" class="radioBtnClassEdit" value="#3B71CA" autocomplete="off"></label>
+              <label style="background-color: #FF8C00; padding: 10px;border-radius: 5px;"><input type="radio" name="event-tag" id="edit-radio-Other" class="radioBtnClassEdit" value="#FF8C00" autocomplete="off"></label>
+
+            </div>
           </div>
           <div class="form-group" style="display: none;">
-              <label class="form-control-label">Description</label>
-              <textarea class="form-control form-control-alternative edit-event--description textarea-autosize" placeholder="Event Desctiption"></textarea>
-              <i class="form-group--bar"></i>
+            <label class="form-control-label">Description</label>
+            <textarea class="form-control form-control-alternative edit-event--description textarea-autosize" placeholder="Event Desctiption"></textarea>
+            <i class="form-group--bar"></i>
           </div>
           <input type="hidden" id="edit-event--id" class="edit-event--id">
           <input type="hidden" id="edit-event--start-h" class="edit-event--start-h" />
           <input type="hidden" id="edit-event--end-h" class="edit-event--end-h" />
         </form>
       </div>
-      <!-- Modal footer -->
       <div class="modal-footer justify-content-between"">
           <button type="button" class="btn btn-danger" data-calendar="delete" data-dismiss="modal" id="btnEliminar">Delete</button>
         
