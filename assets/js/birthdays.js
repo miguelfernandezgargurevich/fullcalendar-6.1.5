@@ -6,7 +6,8 @@ var arrayBirthdays = [{
     color: '#14A44D', 
     textColor: 'white', 
     type: "birthday",
-    allDay: true
+    allDay: true,
+    description: "",
   },
   {
     id: 2001,
@@ -16,7 +17,8 @@ var arrayBirthdays = [{
     color: '#14A44D', 
     textColor: 'white',
     type: "birthday",
-    allDay: true
+    allDay: true,
+    description: "",
   }];
 
   var today = new Date();

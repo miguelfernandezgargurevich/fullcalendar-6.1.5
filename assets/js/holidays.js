@@ -6,7 +6,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white', 
     type: "holiday",
-    allDay: true
+    allDay: true,
+    description: "",
   },
   {
     id: 1001,
@@ -16,7 +17,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1002,
@@ -26,7 +28,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1003,
@@ -36,7 +39,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1004,
@@ -46,7 +50,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1005,
@@ -56,7 +61,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1006,
@@ -66,7 +72,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true
+    allDay: true,
+    description: "",
   },
   {
     id: 1007,
@@ -76,7 +83,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1008,
@@ -86,7 +94,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1009,
@@ -96,7 +105,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1010,
@@ -106,7 +116,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1011,
@@ -116,7 +127,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1012,
@@ -126,7 +138,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1013,
@@ -136,7 +149,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   },
   {
     id: 1014,
@@ -146,7 +160,8 @@ var arrayHolidays = [{
     color: '#DC4C64', 
     textColor: 'white',
     type: "holiday",
-    allDay: true 
+    allDay: true,
+    description: "", 
   }];
 
   var today = new Date();

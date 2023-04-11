@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
         end = arg.event._instance.range.end
         allDay = arg.event._def.allDay;
         type= arg.event._def.extendedProps.type;
+        description = arg.event._def.extendedProps.description;
         
         //console.log(type);
 
@@ -72,21 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
             element.start = start;
             element.end = end;
             element.allDay = allDay;
-
-            if (eventColor == '#14A44D') //birthday
-              element.type  = "birthday";
-            
-            if (eventColor == '#DC4C64') //holiday
-              element.type  = "holiday";
-
-            if (eventColor == '#54B4D3') //vacation
-              element.type  = "vacation";
-
-            if (eventColor == '#3B71CA') //session
-              element.type  = "session";
-
-            if (eventColor == '#FF8C00') //other
-              element.type  = "other";
+            element.description = description;
+            element.type = evalTypeColor(eventColor)
 
             return;
           }
@@ -106,6 +94,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         $("#new-event--start").attr("disabled", true);
         $("#new-event--end").attr("disabled", true);
+
+        document.getElementById("btnAgregar").style.display = "block";
+        document.getElementById("btnActualizar").style.display = "none";
+        document.getElementById("btnEliminar").style.display = "none";
         
 
         if (arg.event == undefined) {
@@ -119,12 +111,14 @@ document.addEventListener('DOMContentLoaded', function() {
           //console.log(endStr);
 
           document.getElementById("new-event--title").value = "";
-          document.getElementById("new-event--start").value = startStrFormat 
+          document.getElementById("new-event--start").value = startStrFormat; 
 
-          document.getElementById("new-event--start-h").value = startStr 
-          document.getElementById("new-event--end").value = endStrFormat 
-          document.getElementById("new-event--end-h").value = endStr 
-          document.getElementById("new-event--allDay").value = arg.allDay
+          document.getElementById("new-event--start-h").value = startStr; 
+          document.getElementById("new-event--end").value = endStrFormat; 
+          document.getElementById("new-event--end-h").value = endStr; 
+          document.getElementById("new-event--allDay").value = arg.allDay;
+          document.getElementById("new-event--description").value = "";
+          
 
           var endNew = endStr;
           var divEndDate= document.getElementById("divEndDateNew");
@@ -145,15 +139,19 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#new-event--start").attr("disabled", false);
         $("#new-event--end").attr("disabled", false);
 
+        document.getElementById("btnAgregar").style.display = "none";
+        document.getElementById("btnActualizar").style.display = "block";
+        document.getElementById("btnEliminar").style.display = "block";
+
         let colorValue = arg.event._def.ui.backgroundColor;
 
         $("input[name=event-tag][value=" + colorValue + "]").prop('checked', true);
 
-        document.getElementById("edit-event--id").value = arg.event._def.publicId;
-        document.getElementById("edit-event--title").value = arg.event._def.title //startStr fecha str
+        document.getElementById("new-event--id").value = arg.event._def.publicId;
+        document.getElementById("new-event--title").value = arg.event._def.title //startStr fecha str
         //document.getElementById("edit-event--allDay").value = arg.event.allDay
-        document.getElementById("edit-event--start-h").value = arg.event.startStr; //fecha str
-        document.getElementById("edit-event--end-h").value = arg.event.endStr //startStr fecha str\
+        document.getElementById("new-event--start-h").value = arg.event.startStr; //fecha str
+        document.getElementById("new-event--end-h").value = arg.event.endStr //startStr fecha str\
 
         var startStrFormat = moment(arg.event.start).utc().format('DD/MM/YYYY hh:mm:ss a');
         var endStrFormat = moment(arg.event.end).utc().format('DD/MM/YYYY hh:mm:ss a');
@@ -166,14 +164,16 @@ document.addEventListener('DOMContentLoaded', function() {
           
         //console.log(arg.event);
 
-        document.getElementById("edit-event--start").value = startStrFormat;
-        document.getElementById("edit-event--end").value = endStrFormat;
+        document.getElementById("new-event--start").value = startStrFormat;
+        document.getElementById("new-event--end").value = endStrFormat;
 
-        var endEdit = arg.event.endStr;
-        var divEndDate= document.getElementById("divEndDateEdit");
+        document.getElementById("new-event--description").value = arg.event._def.extendedProps.description ;
+
+        var endNew = arg.event.endStr;
+        var divEndDate= document.getElementById("divEndDateNew");
 
         
-        $('#edit-event').modal('show'); 
+        $('#new-event').modal('show'); 
 
         /*
         if (endEdit == '')
@@ -189,6 +189,27 @@ document.addEventListener('DOMContentLoaded', function() {
       dayMaxEvents: true, // allow "more" link when too many events
         
     });
+
+    function evalTypeColor(eventColor){
+      var elementtype = "";
+      if (eventColor == '#14A44D') //birthday
+        elementtype  = "birthday";
+            
+      if (eventColor == '#DC4C64') //holiday
+        elementtype  = "holiday";
+
+      if (eventColor == '#54B4D3') //vacation
+        elementtype  = "vacation";
+
+      if (eventColor == '#3B71CA') //session
+        elementtype  = "session";
+
+      if (eventColor == '#FF8C00') //other
+        elementtype  = "other";
+
+      return elementtype;
+    }
+
 
     function viewFilter(){
       var pnl = document.getElementById("external-events");
@@ -278,17 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
           data_arrHolidays.forEach(event => calendar.addEvent(event));
         });
       }
-      /*
-      else {
-        calendar.getEvents().forEach(function(event) {
-          //console.log(event._def.extendedProps.type )
-          if (event._def.extendedProps.type == "holiday") {
-            event.remove()
-          }
       
-        });
-      }
-      */
       if (isCheckedBirthdays == true)
       {
         calendar.batchRendering(() => {
@@ -342,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     $('#btnEliminar').click(function(){
-        var myId = document.getElementById("edit-event--id").value;
+        var myId = document.getElementById("new-event--id").value;
         var event = calendar.getEventById(myId);
         //console.log(event);
 
@@ -371,6 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var allDay = document.getElementById("new-event--allDay").value;
       var allDayBoolean = (allDay === 'true');
       var title = document.getElementById("new-event--title").value;
+      var description =  document.getElementById("new-event--description").value;
 
       var eventColor = "";
       if($("input[type='radio'].radioBtnClassNew").is(':checked')) 
@@ -396,22 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       var id = max+1;
 
-      var type = '';
-
-      if (eventColor == '#14A44D') //birthday
-        type = 'birthday';
-        
-      if (eventColor == '#DC4C64') //holiday
-        type = 'holiday';
-
-      if (eventColor == '#54B4D3') //vacation
-        type = 'vacation';
-
-      if (eventColor == '#3B71CA') //session
-        type = 'session';
-        
-      if (eventColor == '#FF8C00') //other
-        type = 'other';
+      var type = evalTypeColor(eventColor);
       
 
       arrayData.push({ //add to initial array
@@ -422,7 +419,8 @@ document.addEventListener('DOMContentLoaded', function() {
         'allDay': allDayBoolean,
         'color': eventColor,     
         'textColor': 'white',
-        'type': type
+        'type': type,
+        'description': description,
       });
 
       calendar.addEvent({  //add to calendar
@@ -434,43 +432,52 @@ document.addEventListener('DOMContentLoaded', function() {
         color: eventColor,      
         textColor: 'white',
         type: type,
+        description: description,
         
       });
+
+      //console.log(arrayData);
 
     });    
 
     
     $('#btnActualizar').click(function(){
 
-      var myId = document.getElementById("edit-event--id").value;
+      var myId = document.getElementById("new-event--id").value;
       var event = calendar.getEventById(myId);
 
-      var title = document.getElementById("edit-event--title").value;
+      var title = document.getElementById("new-event--title").value;
+
+      var description = document.getElementById("new-event--description").value;
 
       var eventColor = "";
-      if($("input[type='radio'].radioBtnClassEdit").is(':checked')) {
-        eventColor = $("input[type='radio'].radioBtnClassEdit:checked").val();
+      if($("input[type='radio'].radioBtnClassNew").is(':checked')) {
+        eventColor = $("input[type='radio'].radioBtnClassNew:checked").val();
       }
 
-      var start_format = document.getElementById("edit-event--start").value;
-      var end_format = document.getElementById("edit-event--end").value;
+      var start_format = document.getElementById("new-event--start").value;
+      var end_format = document.getElementById("new-event--end").value;
 
 
       var start_format_date = strToDate(start_format);
+      var end_format_date = strToDate(end_format);
 
       //console.log(end_format);
 
-      var end_format_date = strToDate(end_format);
-
       if ( start_format_date > end_format_date ) {
-          alert("Invalid range");
-          return false;
+        alert("Invalid range");
+        return false;
+      } 
+      if ( start_format_date == end_format_date ) {
+        alert("The dates are the same");
+        return false;
       } 
 
       event.setProp('title', title);
       event.setProp('color',eventColor)
       event.setStart(start_format_date);
       event.setEnd(end_format_date);
+      event.setExtendedProp('description',description)
     
       //event.setProp('allDay', allDayBoolean);
       
@@ -483,9 +490,9 @@ document.addEventListener('DOMContentLoaded', function() {
           $(this).find('#new-event--title').focus();
       });
 
-      $("#edit-event").on('shown.bs.modal', function(){
-        $(this).find('#edit-event--title').focus();
-      });
+      var eventColor = "";
+      if($("input[type='radio'].radioBtnClassNew").is(':checked')) 
+        eventColor = $("input[type='radio'].radioBtnClassNew:checked").val();
 
       $('#datetimepicker1').datetimepicker({
         format: 'DD/MM/YYYY hh:mm:ss a',
@@ -494,16 +501,8 @@ document.addEventListener('DOMContentLoaded', function() {
       $('#datetimepicker2').datetimepicker({
         format: 'DD/MM/YYYY hh:mm:ss a',
       });
-  
-      $('#datetimepicker3').datetimepicker({
-        format: 'DD/MM/YYYY hh:mm:ss a',
-      });
-  
-      $('#datetimepicker4').datetimepicker({
-        format: 'DD/MM/YYYY hh:mm:ss a',
-      });
 
-      $("#external-events").draggable({ handle: "header" }); //tvBoard
+      $("#external-events").draggable({ handle: "header" }); 
       //$(".external-events").resizable();
       //console.log(arrayHolidays);
 
