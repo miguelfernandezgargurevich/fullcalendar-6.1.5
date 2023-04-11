@@ -9,15 +9,21 @@ document.addEventListener('DOMContentLoaded', function() {
       timeZone: 'UTC', // the default (unnecessary to specify)
       handleWindowResize: true, 
       customButtons: {
-        myCustomButton: {
+        btnExport: {
           text: 'export',
           click: function() {
-            ExportToExcel("xlsx");
+            exportToExcel("xlsx");
+          }
+        },
+        btnFilter: {
+          text: 'filter',
+          click: function() {
+            viewFilter();
           }
         }
       },
       headerToolbar: {
-        left: 'prev,next today myCustomButton',
+        left: 'prev,next today btnFilter',
         center: 'title',
         right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,dayGridYear,listYear'
       },
@@ -184,8 +190,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
     });
 
+    function viewFilter(){
+      var pnl = document.getElementById("external-events");
+      pnl.style.display = pnl.style.display === 'none' ? '' : 'none';
+    }
 
-    function ExportToExcel(type, fn, dl) {
+    function exportToExcel(type, fn, dl) {
       //fc-multimonth-header-table
       //fc-scrollgrid
       //fc-scrollgrid
@@ -268,7 +278,17 @@ document.addEventListener('DOMContentLoaded', function() {
           data_arrHolidays.forEach(event => calendar.addEvent(event));
         });
       }
-
+      /*
+      else {
+        calendar.getEvents().forEach(function(event) {
+          //console.log(event._def.extendedProps.type )
+          if (event._def.extendedProps.type == "holiday") {
+            event.remove()
+          }
+      
+        });
+      }
+      */
       if (isCheckedBirthdays == true)
       {
         calendar.batchRendering(() => {
@@ -483,6 +503,8 @@ document.addEventListener('DOMContentLoaded', function() {
         format: 'DD/MM/YYYY hh:mm:ss a',
       });
 
+      $("#external-events").draggable({ handle: "header" }); //tvBoard
+      //$(".external-events").resizable();
       //console.log(arrayHolidays);
 
       // batch every modification into one re-render
