@@ -107,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById("new-event--allDay").value = arg.allDay;
           document.getElementById("new-event--description").value = "";
 
+          $("input[name=event-tag][value=" + "#54B4D3" + "]").prop('checked', true);
+
           $('#new-event').modal('show'); 
 
         }
@@ -122,9 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("btnActualizar").style.display = "block";
         document.getElementById("btnEliminar").style.display = "block";
 
-        let colorValue = arg.event._def.ui.backgroundColor;
-
-        $("input[name=event-tag][value=" + colorValue + "]").prop('checked', true);
 
         document.getElementById("new-event--id").value = arg.event._def.publicId;
         document.getElementById("new-event--title").value = arg.event._def.title //startStr fecha str
@@ -145,6 +144,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("new-event--end").value = endStrFormat;
         document.getElementById("new-event--description").value = arg.event._def.extendedProps.description ;
 
+        let colorValue = arg.event._def.ui.backgroundColor;
+        $("input[name=event-tag][value=" + colorValue + "]").prop('checked', true);
+
         $('#new-event').modal('show'); 
 
       },
@@ -152,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
       dayMaxEvents: true, // allow "more" link when too many events
         
     });
+
 
     function evalTypeColor(eventColor){
       var elementtype = "";
@@ -248,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var data_arrBirthdays= arrayData.filter(function(x) { return x.type == "birthday"; });
       var data_arrVacations = arrayData.filter(function(x) { return x.type == "vacation"; });
       var data_arrSessions = arrayData.filter(function(x) { return x.type == "session"; });
-      var data_arrOthers = arrayData.filter(function(x) { return x.type == "other"; });
+      var data_arrOthers = arrayData.filter(function(x) { return x.type == "other"; })
 
       // remove all events
       calendar.getEvents().forEach(event => event.remove());
@@ -287,6 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
           data_arrOthers.forEach(event => calendar.addEvent(event));
         });
       }
+
 
     }
 
