@@ -337,20 +337,32 @@ document.addEventListener('DOMContentLoaded', function() {
         $.ajax({
           type: 'GET',
           contentType: 'application/json; charset=utf-8',
-          url: 'https://localhost:7261/api/calendar/getEventTypes',
+          url: 'https://localhost:7261/api/calendar/getEventTypesAsync',
           headers:{         
-              'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
+              'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
               'Content-Type':'application/json'
           },
           success: function (data, status, xhr) {
             
-            console.log('data: ', data);
+            console.log('data Async: ', data);
+          },
+          error: function(error){
+            console.log(error)
           }
         });
 
         calendar.render();
     }); 
 
+    async function doAjax(url, params = {}, method = 'POST') {
+      return $.ajax({
+        url: url,
+        type: method,
+        dataType: 'json',
+        data: params
+      });
+  }
+  
     $('#btnAgregar').click(function(){
       var start_format = document.getElementById("new-event--start").value;
       var end_format = document.getElementById("new-event--end").value;
