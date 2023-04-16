@@ -334,6 +334,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
        
         //call ajax
+        $.ajax({
+          type: 'GET',
+          contentType: 'application/json; charset=utf-8',
+          url: 'https://localhost:7261/api/calendar/getEventTypes',
+          headers:{         
+              'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
+              'Content-Type':'application/json'
+          },
+          success: function (data, status, xhr) {
+            
+            console.log('data: ', data);
+          }
+        });
+
         calendar.render();
     }); 
 
